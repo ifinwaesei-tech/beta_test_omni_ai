@@ -88,9 +88,10 @@ class CursorWrapper:
             else:
                 self._cursor.execute(query)
         except Exception as e:
-            # Some queries like PRAGMA fail harmlessly in postgres, just ignore
+            # PostgreSQL doesn't support SQLite PRAGMA statements; clear the failed
+            # transaction state before continuing with the rest of startup.
             if self._is_postgres and query.strip().upper().startswith("PRAGMA"):
-                pass
+                self._cursor.connection.rollback()
             else:
                 raise e
         return self
