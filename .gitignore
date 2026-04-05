@@ -4,7 +4,9 @@ __pycache__/
 *.pyd
 
 .DS_Store
+.env
 
+omniai.sqlite
 omniai.sqlite-shm
 omniai.sqlite-wal
 .flask_session/
